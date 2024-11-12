@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ 'Edit Task' if task else 'Add Task' }}</h1>
+<form method="POST" action="{{ url_for('edit_task', task_id=task.id) if task else url_for('add_task') }}">
+    <div>
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" value="{{ task.title if task else '' }}" required>
+    </div>
+    <div>
+        <label for="description">Description</label>
+        <textarea id="description" name="description">{{ task.description if task else '' }}</textarea>
+    </div>
+    <div>
+        <label for="due_date">Due Date</label>
+        <input type="date" id="due_date" name="due_date" value="{{ task.due_date.strftime('%Y-%m-%d') if task and task.due_date else '' }}">
+    </div>
+    <div>
+        <label for="category">Category</label>
+        <input type="text" id="category" name="category" value="{{ task.category if task else '' }}">
+    </div>
+    <div>
+        <label for="completed">Completed</label>
+        <input type="checkbox" id="completed" name="completed" {% if task and task.completed %}checked{% endif %}>
+    </div>
+    <div>
+        <input type="submit" value="{{ 'Update Task' if task else 'Add Task' }}">
+    </div>
+</form>
+{% endblock %}
